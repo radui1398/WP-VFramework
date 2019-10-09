@@ -1,8 +1,7 @@
 /*
-Theme Name: Theme_Name
-Theme URI: Theme_URL
-Author: VeryCreative
-Author URI: http://www.verycreative.ro
+Theme Name: New Theme
+Theme URI: -
+Author: -
 Version: 1.0
 */
 

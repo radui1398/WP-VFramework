@@ -1,12 +1,15 @@
 <?php
 
-class WPFunctions
+class Theme
 {
     private $todo = true;
     private $ajax;
     private $autoHomepage;
     private $hideAdminBar;
     private $woocommerce;
+    private $thumbnailWidth;
+    private $thumbnailHeight;
+    private $thumbnailCrop;
 
     public function __construct()
     {
@@ -104,6 +107,8 @@ class WPFunctions
             add_filter('show_admin_bar', array($this, 'hide_admin_bar'));
         if ($this->woocommerce == true)
             add_action('after_setup_theme', array($this, 'mytheme_add_woocommerce_support'));
+        if ($this->thumbnailWidth && $this->thumbnailHeight)
+            add_action('after_setup_theme', array($this,'extraThemeSettings'));
 
     }
 
@@ -181,5 +186,21 @@ class WPFunctions
     {
         return false;
     }
+
+    public function imageSize($name,$width,$height,$crop = false){
+        add_image_size($name, $width, $height, $crop);
+    }
+
+    public function customThumbnailSize($width,$height,$crop = false){
+        $this->thumbnailWidth = $width;
+        $this->thumbnailHeight = $height;
+        $this->thumbnailCrop = $crop;
+    }
+
+    public function extraThemeSettings(){
+        add_theme_support('post-thumbnails');
+        set_post_thumbnail_size($this->thumbnailWidth, $this->thumbnailHeight, $this->thumbnailCrop);
+    }
+
 }
 
